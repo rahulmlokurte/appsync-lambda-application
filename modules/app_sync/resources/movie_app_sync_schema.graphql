@@ -1,0 +1,15 @@
+schema {
+    query: Query
+}
+
+type Movie {
+    id: ID!
+    title: String!
+    tagline: String
+    overview: String
+}
+
+type Query {
+    movies: [Movie]
+    getMovie(id: ID!): Movie
+}
