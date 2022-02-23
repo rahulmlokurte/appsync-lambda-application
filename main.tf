@@ -27,5 +27,5 @@ module "lambda" {
 
 module "appsync" {
   source = "./modules/app_sync"
-  function_arn = module.lambda.app_sync_function_arn
+  app_sync_function_arn = module.lambda.app_sync_function_arn
 }
