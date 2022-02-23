@@ -12,9 +12,9 @@ module "movie_app_sync" {
   }
   resolvers = {
     "Query.getMovie" = {
-      data_source = "movie_app_sync_datasource"
-      direct_lambda = true
-      request_template = <<EOF
+      data_source       = "movie_app_sync_datasource"
+      direct_lambda     = true
+      request_template  = <<EOF
       {
     "version": "2017-02-28",
     "operation": "Invoke",
@@ -28,7 +28,22 @@ EOF
       $utils.toJson($context.result)
 EOF
     }
-  }
 
-  direct_lambda_request_template = ""
+    "Query.movies" = {
+      data_source       = "movie_app_sync_datasource"
+      direct_lambda     = true
+      request_template  = <<EOF
+      {
+ "version": "2017-02-28",
+    "operation": "Invoke",
+    "payload": {
+        "field": "movies"
+    }
+}
+EOF
+      response_template = <<EOF
+      $utils.toJson($context.result)
+EOF
+    }
+  }
 }
