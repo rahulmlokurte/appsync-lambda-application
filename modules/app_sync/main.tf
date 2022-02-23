@@ -14,36 +14,15 @@ module "movie_app_sync" {
     "Query.getMovie" = {
       data_source       = "movie_app_sync_datasource"
       direct_lambda     = true
-      request_template  = <<EOF
-      {
-    "version": "2017-02-28",
-    "operation": "Invoke",
-    "payload": {
-        "field": "getMovie",
-        "arguments":  $utils.toJson($context.arguments)
-    }
-}
-EOF
-      response_template = <<EOF
-      $utils.toJson($context.result)
-EOF
+      request_template  = data.template_file.getMovie_request_template.rendered
+      response_template = data.template_file.getMovie_response_template.rendered
     }
 
     "Query.movies" = {
       data_source       = "movie_app_sync_datasource"
       direct_lambda     = true
-      request_template  = <<EOF
-      {
- "version": "2017-02-28",
-    "operation": "Invoke",
-    "payload": {
-        "field": "movies"
-    }
-}
-EOF
-      response_template = <<EOF
-      $utils.toJson($context.result)
-EOF
+      request_template  = data.template_file.movies_request_template.rendered
+      response_template = data.template_file.movies_response_template.rendered
     }
   }
 }
